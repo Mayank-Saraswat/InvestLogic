@@ -1,26 +1,5 @@
 const service = require("../Services/calculator")
 
-
-const validate = (props) => {
-
-    if (props.monthlyInvestment < 1000 || props.monthlyInvestment > 10000000) {
-        return false;
-    }
-
-    if (props.investmentPeriod < 1 || props.investmentPeriod > 30) {
-        return false;
-    }
-
-    if (props.rateOfReturn < 1 || props.rateOfReturn > 30) {
-        return false;
-    }
-
-    if (props.rateOfInflation < 0 || props.rateOfInflation > 30) {
-        return false;
-    }
-    return true;
-};
-
 const badRequest = {
     status: -1,
     message: "Something is not good",
@@ -30,12 +9,22 @@ const badRequest = {
 const validator = async (req, res) => {
 
     try {
-        
-        if (validate(req.query) === false) {
-            res.send(badRequest);
-            return;
+        if (parseInt(object.monthlyInvestment) < 1000 || parseInt(object.monthlyInvestment) > 10000000) {
+            return new Error("Invalid input");
         }
-
+    
+        if (parseInt(object.investmentPeriod) < 1 || parseInt(object.investmentPeriod) > 30) {
+            return new Error("Invalid input");
+        }
+    
+        if (parseInt(object.rateOfReturn) < 1 || parseInt(object.rateOfReturn) > 30) {
+            return new Error("Invalid input");
+        }
+    
+        if (parseInt(object.rateOfInflation) < 0 || parseInt(object.rateOfInflation) > 30) {
+            return new Error("Invalid input");
+        }
+    
         const result = await service.calculate(req.query);
         res.send({
             status: 0,
