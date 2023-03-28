@@ -12,20 +12,21 @@ async function calculate(obj) {
       investment: 0,
       value: 0,
     }]
+
     for (let i = 1; i <= months; i++) {
       sipGrowthResult += Number(obj.monthlyInvestment) * Math.pow(1 + rate / 100, i)
       if (i % 12 == 0) {
-        const obj = {
+        const obj1 = {
           year: i / 12,
           investment: Number(obj.monthlyInvestment) * i,
           value: Math.round(sipGrowthResult)
         }
-        graph.push(obj)
+        graph.push(obj1)
       }
     }
+    
     sipGrowthResult = sipGrowthResult.toFixed(0);
     const potentialCapitalGain = (obj.monthlyInvestment*obj.investmentPeriod);
-
 
     graphData = {
       graph,
@@ -38,7 +39,7 @@ async function calculate(obj) {
     return graphData;
   }
   catch (error) {
-    res.send(error);
+    return error.message;
   }
 }
 

@@ -1,4 +1,14 @@
-const service = require("../Services/calculator")
+const service = require("../Services/calculator");
+const {
+    MONTHLYINVESTMENTMIN,
+    MONTHLYINVESTMENTMAX,
+    INVESTMENTPERIODMIN,
+    INVESTMENTPERIODMAX,
+    RATEOFRETURNMIN,
+    RATEOFRETURNMAX,
+    RATEOFINFLATIONMIN,
+    RATEOFINFLATIONMAX
+} = require("../Constants/index");
 
 const badRequest = {
     status: -1,
@@ -9,22 +19,23 @@ const badRequest = {
 const validator = async (req, res) => {
 
     try {
-        if (parseInt(object.monthlyInvestment) < 1000 || parseInt(object.monthlyInvestment) > 10000000) {
+        const object = req.query;
+        if (parseInt(object.monthlyInvestment) < MONTHLYINVESTMENTMIN || parseInt(object.monthlyInvestment) > MONTHLYINVESTMENTMAX) {
             return new Error("Invalid input");
         }
     
-        if (parseInt(object.investmentPeriod) < 1 || parseInt(object.investmentPeriod) > 30) {
+        if (parseInt(object.investmentPeriod) < INVESTMENTPERIODMIN || parseInt(object.investmentPeriod) > INVESTMENTPERIODMAX) {
             return new Error("Invalid input");
         }
     
-        if (parseInt(object.rateOfReturn) < 1 || parseInt(object.rateOfReturn) > 30) {
+        if (parseInt(object.rateOfReturn) < RATEOFRETURNMIN || parseInt(object.rateOfReturn) > RATEOFRETURNMAX) {
             return new Error("Invalid input");
         }
     
-        if (parseInt(object.rateOfInflation) < 0 || parseInt(object.rateOfInflation) > 30) {
+        if (parseInt(object.rateOfInflation) < RATEOFINFLATIONMIN || parseInt(object.rateOfInflation) > RATEOFINFLATIONMAX) {
             return new Error("Invalid input");
         }
-    
+        
         const result = await service.calculate(req.query);
         res.send({
             status: 0,
