@@ -7,12 +7,12 @@ async function calculate(obj) {
     const totalMonthlyInvest = monthlyInvestment*investmentPeriod*12;
     let sipGrowthResultFinal = 0, sipGrowthResult=0;
 
-    //For initialising graph lines from origin default values are passed in graph array
+    //For initialising graph lines from origin, default values are passed in graph array
     const graph = [
       {
         year:0,
         investment:0,
-        value:0
+        sipGrowth:0
       }
     ];
 
@@ -22,7 +22,7 @@ async function calculate(obj) {
         const obj1 = {
           year: i / 12,
           investment: monthlyInvestment * i,
-          value: Math.round(sipGrowthResult)
+          sipGrowth: Math.round(sipGrowthResult)
         }
         graph.push(obj1)
       }
