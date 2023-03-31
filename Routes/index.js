@@ -1,8 +1,8 @@
-const express = require("express");
-const router = express.Router();
+const express = require("express")
+const router = express.Router()
 
-const controller = require("../Controllers/calculator.js");
+const controller = require("../Controllers/calculator")
 
-router.get("/api",controller.validator);
+router.get("/getSipCalculator",controller.inputValidator)
 
-module.exports = router;
+module.exports = router

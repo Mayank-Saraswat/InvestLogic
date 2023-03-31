@@ -1,10 +1,12 @@
-async function calculate(obj) {
+const { constants } = require("../Constants/index")
+
+const calculateSip = async ({monthlyInvestment, investmentPeriod, rateOfInflation, rateOfReturn}) => {
   try {
-    const monthlyInvestment = Number(obj.monthlyInvestment)
-    const investmentPeriod = Number(obj.investmentPeriod)
-    const rate = (Number(obj.rateOfReturn) - Number(obj.rateOfInflation)) / 12
-    const months = Number(obj.investmentPeriod) * 12;
-    const totalMonthlyInvest = monthlyInvestment*investmentPeriod*12;
+    monthlyInvestment = Number(monthlyInvestment)
+    investmentPeriod = Number(investmentPeriod)
+    rate = (Number(rateOfReturn) - Number(rateOfInflation)) / constants.MONTHSINAYEAR
+    const months = investmentPeriod * constants.MONTHSINAYEAR;
+    const totalMonthlyInvest = monthlyInvestment*investmentPeriod*constants.MONTHSINAYEAR;
     let sipGrowthResultFinal = 0, sipGrowthResult=0;
 
     //For initialising graph lines from origin, default values are passed in graph array
@@ -18,9 +20,9 @@ async function calculate(obj) {
 
     for (let i = 1; i <= months; i++) {
       sipGrowthResult += monthlyInvestment * Math.pow(1 + rate / 100, i)
-      if (i % 12 == 0) {
+      if (i % constants.MONTHSINAYEAR == 0) {
         const obj1 = {
-          year: i / 12,
+          year: i / constants.MONTHSINAYEAR,
           investment: monthlyInvestment * i,
           sipGrowth: Math.round(sipGrowthResult)
         }
@@ -42,8 +44,8 @@ async function calculate(obj) {
     return graphData;
   }
   catch (error) {
-    return error.message;
+    throw error.message;  
   }
 }
 
-module.exports = { calculate };
+module.exports = { calculateSip };
