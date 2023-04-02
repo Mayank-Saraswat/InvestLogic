@@ -1,5 +1,5 @@
-const service = require("../Services/calculator")
-const { constants } = require("../Constants/index")
+const service = require("../services/calculator")
+const { constantValues } = require("../constants/index")
 
 const inputValidator = async (req, res) => {
     try {
@@ -8,33 +8,33 @@ const inputValidator = async (req, res) => {
         monthlyInvestment = parseInt(monthlyInvestment)
         investmentPeriod = parseInt(investmentPeriod)
         rateOfReturn = parseFloat(rateOfReturn)
-        rateOfInflation=parseFloat(rateOfInflation)
+        rateOfInflation = parseFloat(rateOfInflation)
 
-        if (monthlyInvestment < constants.MONTHLYINVESTMENTMIN || monthlyInvestment > constants.MONTHLYINVESTMENTMAX) {
+        if (monthlyInvestment < constantValues.MONTHLY_INVESTMENT_MIN || monthlyInvestment > constantValues.MONTHLY_INVESTMENT_MAX) {
             throw "Invalid amount of monthly investment"
         }
-        else if (investmentPeriod < constants.INVESTMENTPERIODMIN || investmentPeriod > constants.INVESTMENTPERIODMAX) {
+        else if (investmentPeriod < constantValues.INVESTMENT_PERIOD_MIN || investmentPeriod > constantValues.INVESTMENT_PERIOD_MAX) {
             throw "Invalid input of investment period"
         }
-        else if (rateOfReturn < constants.RATEOFRETURNMIN || rateOfReturn > constants.RATEOFRETURNMAX) {
+        else if (rateOfReturn < constantValues.RATE_OF_RETURN_MIN || rateOfReturn > constantValues.RATE_OF_RETURN_MAX) {
             throw "Invalid rate of return"
         }
-        else if (rateOfInflation < constants.RATEOFINFLATIONMIN || rateOfInflation > constants.RATEOFINFLATIONMAX) {
+        else if (rateOfInflation < constantValues.RATE_OF_INFLATION_MIN || rateOfInflation > constantValues.RATE_OF_INFLATION_MAX) {
             throw "Invalid rate of inflation"
         }
-        else {
+        
         const result = await service.calculateSip(req.query)
         res.send({
             status: 0,
             message: "Request Successful",
-            fresult: result
+            result: result
         })
-      }
+      
     }
     catch (error) {
         res.send({
             status: -1,
-            fresult: error.message
+            result: error.message || error
         })
     }
 }

@@ -1,8 +1,8 @@
 const express = require("express")
 const router = express.Router()
 
-const controller = require("../Controllers/calculator")
+const { inputValidator } = require("../controllers/calculator")
 
-router.get("/getSipCalculator",controller.inputValidator)
+router.get("/getSipCalculator", inputValidator)
 
 module.exports = router
